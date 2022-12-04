@@ -8,6 +8,6 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <wait.h>
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 #endif

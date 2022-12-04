@@ -36,8 +36,11 @@ $(NAME): $(OBJS)
 			$(CCF) $(READLINE) $(OBJS) $(LIB) -o $(NAME)
 			echo "$(TURQUOISE)\n\tComplited $(NAME)!\n$(END)"
 
+#-L /usr/local/opt/readline/lib
+
 %.o: %.c $(HEADER)
-			$(CCF) -c $< -o $@ -I $(HEADER)
+			$(CCF) -c $< -o $@ 
+#-I include/
 
 clean:
 			$(RM) $(OBJS)

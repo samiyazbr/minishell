@@ -4,9 +4,16 @@ SRCS		= src/main.c
 
 OBJS		= $(SRCS:%.c=%.o)
 
-LIB			= libft/libft.a
+LIBFT_DIR	= libft
+LIBFT = libft.a
 
 CCF			= gcc -Wall -Wextra -Werror
+
+RL_INC		=	-I /usr/local/opt/readline/include
+RL_LINK		=	-L /usr/local/opt/readline/lib -l readline
+INC_DIR		=	include
+SRC_DIR		=	src
+OBJ_DIR		=	objects
 
 HEADER		= include/minishell.h
 
@@ -27,30 +34,30 @@ END			=	\033[0m
 
 .PHONY: all clean fclean re libft
 
-all: libft $(NAME)
+all: $(NAME)
 
-libft:
-			$(MAKE) -C libft/
+$(LIBFT):	
+			@make -C $(LIBFT_DIR) all
 
-$(NAME): $(OBJS)
-			$(CCF) $(READLINE) $(OBJS) $(LIB) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+			$(CCF) $(OBJS) $(LIBFT_DIR)/$(LIBFT) $(RL_LINK) -o $(NAME)
 			echo "$(TURQUOISE)\n\tComplited $(NAME)!\n$(END)"
 
 #-L /usr/local/opt/readline/lib
 
-%.o: %.c $(HEADER)
-			$(CCF) -c $< -o $@ 
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+			@mkdir -p $(OBJ_DIR)
+			@printf $(YELLOW)
+			$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBFT_DIR)/$(INC_DIR) $(RL_INC) -c $< -o $@
+
 #-I include/
 
 clean:
 			$(RM) $(OBJS)
-			$(MAKE) -C libft/clean
+			$(MAKE) -C libft/ clean
 			echo "$(BLUE)\n\tCleaning succeed!!\n$(END)"
 
 fclean: clean
 			$(RM) $(NAME)
-			$(MAKE) -C libft/fclean
+			$(MAKE) -C libft/ fclean
 			echo "$(GRY)\n\tAll files were deleted!\n$(END)"
-
-re: fclean all
-			echo "$(YELLOW)\n\tRemake done!\n$(END)"

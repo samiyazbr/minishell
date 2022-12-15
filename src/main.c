@@ -18,26 +18,24 @@ int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-    char *cmd;
+	char *cmd;
 	int pid;
 	char **av;
 	int flag;
 
 	ft_signal();
-    while(1)
-    {
+	while (1)
+	{
 		flag = 0;
-        cmd = readline("minishell🤓$");
+		cmd = readline("minishell🤓$");
 		if (cmd == NULL)
 		{
 			printf("\n");
 			exit (0);
 		}
 		av = ft_split(cmd, ' ');
-        if(!cmd)
-        {
+		if(!cmd)
             exit(EXIT_SUCCESS);
-        }
 		if (strlen(cmd) > 0)
       		add_history(cmd);
         if(cmd[0] == '\0' || strcmp(cmd, "\n") == 0)

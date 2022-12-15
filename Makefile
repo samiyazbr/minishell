@@ -61,3 +61,5 @@ fclean: clean
 			$(RM) $(NAME)
 			$(MAKE) -C libft/ fclean
 			echo "$(GRY)\n\tAll files were deleted!\n$(END)"
+
+re: fclean all

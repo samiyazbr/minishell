@@ -56,14 +56,13 @@ int main(int argc, char **argv, char **envp)
 		if(flag)
 		{
 		pid = fork();
-			if(pid == 0)
-				execve(cmd, av, envp);
+		if(pid == 0)
+			execve(cmd, av, envp);
 		}
 		waitpid(pid, &flag, 0);
         //printf("%s\n", cmd);
         free(cmd);
 		cmd = NULL;
-
     }
 
     exit(EXIT_SUCCESS);

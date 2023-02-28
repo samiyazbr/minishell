@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: szubair <szubair@student.42.fr>            +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/09 11:29:51 by ooutabac          #+#    #+#              #
-#    Updated: 2023/02/17 15:11:38 by szubair          ###   ########.fr        #
+#    Updated: 2023/02/27 10:03:54 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,10 @@ SRCS		=	src/main.c			\
 				parsing/utils3.c	\
 				parsing/utils4.c	\
 				parsing/utils5.c	\
-				#parsing/free.c		\
-
+				parsing/free.c		\
+				parsing/utils6.c	\
+				parsing/utils7.c 	\
+				src/redirection.c
 OBJS		=	$(SRCS:%c=%o)
 
 CC			=	gcc

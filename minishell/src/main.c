@@ -17,19 +17,6 @@
 //	return (-1);
 //}
 
-void	free_2d(char **array)
-{
-	int i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-
 void ft_ctrl_c()
 {
 	rl_replace_line("", 0);
@@ -46,75 +33,6 @@ void ft_signal()
 	signal(SIGINT, ft_ctrl_c);
 }
 
-//#define PROMPT "minishell🤓$ "
-
-//char *get_command() {
-//    char *cmd = readline(PROMPT);
-//    if (cmd && *cmd)
-//        add_history(cmd);
-//    return cmd;
-//}
-
-//char **parse_command(char *cmd) {
-//    char **av = NULL;
-//    if (cmd)
-//        av = ft_split(cmd, ' ');
-//    return av;
-//}
-
-//void execute_command(char **av, char **envp) {
-//    if (!av || !av[0])
-//        return;
-//    char *cmd = av[0];
-//    if (ft_strchr(cmd, '/') == 0) {
-//        char *path = ft_getenv("PATH");
-//        if (!path) {
-//            printf("Error: PATH environment variable not set\n");
-//            return;
-//        }
-//        char **paths = ft_split(path, ':');
-//        for (int i = 0; paths[i]; i++) {
-//            paths[i] = ft_strjoin(paths[i], "/");
-//            cmd = ft_strjoin(paths[i], av[0]);
-//            if (access(cmd, 0) == 0) {
-//                break;
-//            }
-//        }
-//    }
-//    int pid = fork();
-//    if (pid == 0) {
-//        execve(cmd, av, envp);
-//        perror("execve");
-//        exit(1);
-//    } else if (pid == -1) {
-//        perror("fork");
-//        exit(1);
-//    } else {
-//        int status;
-//        waitpid(pid, &status, 0);
-//    }
-//}
-
-//int main(int argc, char **argv, char **envp) {
-//    (void)argv;
-//	(void)argc;
-	
-//	ft_signal();
-//    while (1) {
-//        char *cmd = get_command();
-//        if (!cmd)
-//            continue;
-//        if (strcmp(cmd, "exit") == 0) {
-//            free(cmd);
-//            break;
-//        }
-//        char **av = parse_command(cmd);
-//        free(cmd);
-//        execute_command(av, envp);
-//        free(av);
-//    }
-//    return 0;
-//}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -179,7 +97,10 @@ int main(int argc, char **argv, char **envp)
 		}
 		pid = fork();
 		if(pid == 0)
+		{
 			execve(cmd, av, envp);
+			perror("execve");
+		}
 		i++;
 		waitpid(pid, &flag, 0);
 		free(cmd);

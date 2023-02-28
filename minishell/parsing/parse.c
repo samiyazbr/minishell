@@ -6,7 +6,7 @@
 /*   By: ooutabac <ooutabac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:29:43 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/02/13 18:11:37 by ooutabac         ###   ########.fr       */
+/*   Updated: 2023/02/23 22:06:04 by ooutabac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,24 @@ t_shell_s	*parse(char *str, char **envp)
 		free(str2);
 	}
 	minishell->cmd_line = ft_strdup(str);
+	// printf("count_pipes = %i\n", count_pipes(str));
+	// minishell = get_command_blocks(minishell, str);
 	minishell = get_path(minishell, envp);
 	minishell = get_home(minishell, envp);
+	minishell = get_env_struct(minishell, envp);
 	minishell = lexer(minishell, str);
-	// if (check_validity(minishell) == FALSE)
-	// 	free_everything(minishell);
-	// minishell = get_commands(minishell, str);
+	minishell = raw_lexer(minishell, str);
+	if (minishell && minishell->lexer)
+		minishell->lexer->command_blocks = split_pipes(str);
+	minishell = get_redirections(minishell);
+	minishell = dollar_sign(minishell);
+	if (check_validity(minishell, str) == FALSE)
+	{
+		free_everything(minishell);
+		printf("Error: Syntax\n");
+		return (NULL);
+	}
+	minishell = get_commands(minishell, str);
 	return (minishell);
 }
 

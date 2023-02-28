@@ -42,15 +42,15 @@ minishell$ "Is this working?    " (DONE)
 minishell$ "  Is this working?  " (DONE)
 minishell$ "Is    this      working?" (DONE)
 minishell$ hello there "is this working?" (DONE)
-minishell$ hello there"is this working?" (NOT DONE)
-minishell$ hello there"  is this working?" (NOT DONE)
-minishell$ hello there"is this working?  " (NOT DONE)
-minishell$ hello there"  " (NOT DONE)
-minishell$ "" "  "  """" (NOT DONE)
-minishell$ ""  """ "" " (NOT DONE)
-minishell$ "" "  "  """" " (DONE)
-minishell$ "hello""hello""hello""hello""hello""hello" (NOT DONE)
-minishell$ hello there"is this working?
+minishell$ hello there"is this working?" (DONE)
+minishell$ hello there"  is this working?" (DONE)
+minishell$ hello there"is this working?  " (DONE)
+minishell$ hello there"  " (DONE)
+minishell$ "" "  "  """" (DONE)
+minishell$ ""  """ "" " (DONE)
+minishell$ "" "  "  """" " (DONE)"
+minishell$ "hello""hello""hello""hello""hello""hello" (DONE)"
+minishell$ hello there"is this working? (DONE)
 
 **PIPES**
 minishell$ |

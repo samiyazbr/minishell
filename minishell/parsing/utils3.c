@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szubair <szubair@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooutabac <ooutabac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:48:06 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/02/13 18:28:48 by szubair          ###   ########.fr       */
+/*   Updated: 2023/02/23 19:19:58 by ooutabac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 // 	if (!str)
 // 		return (minishell);
 // 	minishell->lexer = ft_calloc(sizeof(t_lexer), 1);
+
 // 	minishell->lexer->num_of_dquotes = number_of_dquotes(str);
 // 	if (minishell->lexer->num_of_dquotes % 2 == 1)
 // 		return (printf("Minishell: Error: lexer--utils3.c: Odd number of quotes\n"), minishell);
@@ -53,6 +54,96 @@ How it works:
 2) If I encounter double or single quotes, I add it to tokens[x] without the quotes
 3) I finalize by passing the tokens to the parser
 */
+// t_shell_s		*lexer(t_shell_s *minishell, char *str)
+// {
+// 	t_counter	count;
+
+// 	if (!minishell)
+// 		return (NULL);
+// 	if (!str)
+// 		return (minishell);
+// 	count.i = 0;
+// 	count.j = 0;
+// 	count.k = 0;
+// 	if (number_of_dquotes(str) % 2 == 1 || number_of_squotes(str) % 2 == 1)
+// 	{
+// 		free_everything(minishell);
+// 		printf("Minishell: Error: lexer--utils3.c: Odd number of quotes\n");
+// 		exit(1);
+// 		// return (minishell);
+// 	}
+// 	minishell->lexer = ft_calloc(sizeof(t_lexer), 1);
+// 	minishell->lexer->tokens = malloc(sizeof(char *) * (num_of_tokens(str) + 1));
+// 	printf("num of tokens = %i\n", num_of_tokens(str));
+// 	// minishell->lexer->num_of_dquotes = number_of_dquotes(str);
+// 	while (str[count.i])
+// 	{
+// 		count.trigger = 0;
+// 		if (str[count.i] == '\"')
+// 		{
+// 			count.i++;
+// 			count.trigger = 1;
+// 			minishell->lexer->tokens[count.j] = malloc(sizeof(char) * ft_strlen_dquotes(str, count.i) + 1);
+// 			while (str[count.i] && str[count.i] != '\"' && ((!str[count.i + 1]) || (str[count.i + 1] && str[count.i + 1] != ' ' && str[count.i + 1] != '\t')))
+// 			{
+// 				// if (str[count.i] == '\"' && (str[count.i + 1] && (str[count.i + 1] == ' ' || str[count.i + 1] == '\t')))
+// 				// 	break ;
+// 				// printf("count.i in lexer dquotes = %i\n", count.i);
+// 				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+// 			}
+// 			printf("%c\n", str[count.i]);
+// 			// if (str[count.i + 1] && str[count.i + 1] != ' ' && str[count.i + 1] != '\t')
+// 			// {
+// 			// 	count.i++;
+// 			// 	while (str[count.i] && str[count.i] != ' ' && str[count.i] != '\t')
+// 			// 		minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+// 			// }
+// 			minishell->lexer->tokens[count.j][count.k] = '\0';
+// 			count.k = 0;
+// 			if (!minishell->lexer->tokens[count.j++])
+// 				return (minishell);
+// 		}
+// 		else if (str[count.i] == '\'')
+// 		{
+// 			count.i++;
+// 			minishell->lexer->tokens[count.j] = malloc(sizeof(char) * ft_strlen_squotes(str, count.i) + 1);
+// 			while (str[count.i] != '\'')
+// 				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+// 			if (str[count.i + 1] && str[count.i + 1] != ' ' && str[count.i + 1] != '\t')
+// 			{
+// 				count.i++;
+// 				while (str[count.i] && str[count.i] != ' ' && str[count.i] != '\t')
+// 					minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+// 			}
+// 			minishell->lexer->tokens[count.j][count.k] = '\0';
+// 			count.k = 0;
+// 			if (!minishell->lexer->tokens[count.j++])
+// 				return (minishell);
+// 		}
+// 		else
+// 		{
+// 			count.i = skip_spaces(str, count.i);
+// 			minishell->lexer->tokens[count.j++] = get_next_word(str, count.i);
+// 			// printf("token[%i]: %s\n", count.j - 1, minishell->lexer->tokens[count.j - 1]);
+// 		}
+// 		// count.i = skip_spaces(str, count.i);
+// 		// while (str[count.i] && (str[count.i] != ' ' && str[count.i] != '\t'))
+// 		// {
+
+// 		// }
+// 		// if (count.i != is_symbol(str[count.i]) == FALSE)
+// 		count.i = skip_token(str, count.i);
+// 		count.i = skip_spaces(str, count.i);
+// 		printf("count.i = %i\n", count.i);
+// 	}
+// 	minishell->lexer->tokens[count.j] = NULL;
+// 	for (int x = 0; minishell->lexer->tokens[x]; x++)
+// 		printf("token[%i] = %s\n", x, minishell->lexer->tokens[x]);
+// 	return (minishell);
+// }
+// while (str[count.i] && (str[count.i] != '\"' && ((!str[count.i + 1]) || (str[count.i + 1] && str[count.i + 1] != ' ' && str[count.i + 1] != '\t'))))
+
+
 t_shell_s		*lexer(t_shell_s *minishell, char *str)
 {
 	t_counter	count;
@@ -63,126 +154,83 @@ t_shell_s		*lexer(t_shell_s *minishell, char *str)
 		return (minishell);
 	count.i = 0;
 	count.j = 0;
-	count.k = 0;
-	if (number_of_dquotes(str) % 2 == 1)
-		return (printf("Minishell: Error: lexer--utils3.c: Odd number of quotes\n"), minishell);
-	if (number_of_squotes(str) % 2 == 1)
-		return (printf("Minishell: Error: lexer--utils3.c: Odd number of quotes\n"), minishell);
-	minishell->lexer = ft_calloc(sizeof(t_lexer), 1);
-	minishell->lexer->tokens = malloc(sizeof(char *) * (num_of_tokens(str) + 1));
-	// minishell->lexer->num_of_dquotes = number_of_dquotes(str);
-	while (str[count.i])
+	if (number_of_dquotes(str) % 2 == 1 || number_of_squotes(str) % 2 == 1)
 	{
-		// if (str[count.i] == '\"')
-		// {
-		// 	count.i++;
-		// 	count.i = skip_spaces(str, count.i);
-		// 	while (str[count.i] != '\"')
-		// 	{
-		// 		minishell->lexer->tokens[count.j++] = lexer_dquotes(minishell, str, count.i);
-		// 		if (!minishell->lexer->tokens[count.j - 1])
-		// 			return (minishell);
-		// 		count.i += ft_strlen_dquotes(str, count.i);
-		// 		count.i = skip_spaces(str, count.i);
-		// 		printf("token[%i]: %s\n", count.j - 1, minishell->lexer->tokens[count.j - 1]);
-		// 	}
-		// }
-		if (str[count.i] == '>')
+		free_everything(minishell);
+		printf("Minishell: Error: lexer--utils3.c: Odd number of quotes\n");
+		exit(1);
+		// return (minishell);
+	}
+	minishell->lexer = ft_calloc(sizeof(t_lexer), 1);
+	minishell->lexer->num_of_tokens = num_of_tokens(str);
+	minishell->lexer->tokens = malloc(sizeof(char *) * (minishell->lexer->num_of_tokens + 1));
+	printf("num of tokens = %i\n", minishell->lexer->num_of_tokens);
+	while (str[count.i] && count.j < minishell->lexer->num_of_tokens)
+	{
+		minishell->lexer->tokens[count.j] = malloc(sizeof(char) * token_size(str, count.i) + 1);
+		printf("token size in lexer = %i\n", token_size(str, count.i));
+		count.k = 0;
+		count.trigger = 0;
+		while (str[count.i] && count.j < minishell->lexer->num_of_tokens)
 		{
-			printf("I am in > condition\n");
-			if (str[count.i + 1] && str[count.i + 1] == '>')
-			{
-				minishell->lexer->tokens[count.j] = malloc(sizeof(char) * (2 + 1));
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			}
-			else if (str[count.i + 1] && str[count.i + 1] != '>')
-			{
-				minishell->lexer->tokens[count.j] = malloc(sizeof(char) * (1 + 1));
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			}
-			minishell->lexer->tokens[count.j++][count.k] = '\0';
-		}
-		else if (str[count.i] == '<')
-		{
-			printf("I am in < condition\n");
-			if (str[count.i + 1] && str[count.i + 1] == '<')
-			{
-				minishell->lexer->tokens[count.j] = malloc(sizeof(char) * (2 + 1));
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			}
-			else if (str[count.i + 1] && str[count.i + 1] != '<')
-			{
-				minishell->lexer->tokens[count.j] = malloc(sizeof(char) * (1 + 1));
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			}
-			minishell->lexer->tokens[count.j++][count.k] = '\0';
-		}
-		else if (str[count.i] == '\"')
-		{
-			count.i++;
-			// count.i = skip_spaces(str, count.i);
-			minishell->lexer->tokens[count.j] = malloc(sizeof(char) * ft_strlen_dquotes(str, count.i) + 1);
-			while (str[count.i] != '\"')
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			// printf("%c\n", str[count.i]);
-			if (str[count.i + 1] && str[count.i + 1] != ' ' && str[count.i + 1] != '\t')
+			if (str[count.i] == '\"')
 			{
 				count.i++;
-				while (str[count.i] && str[count.i] != ' ' && str[count.i] != '\t')
+				while (str[count.i] && str[count.i] != '\"')
+				{
 					minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+				}
+				count.i++;
 			}
-			// count.i++;
-			// if (str[count.i] && str[count.i] != ' ' && str[count.i] != '\t')
-			// {
-			// 	while (str[count.i] && str[count.i] != ' ' && str[count.i] != '\t')
-			// 		minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			// }
-			minishell->lexer->tokens[count.j][count.k] = '\0';
-			count.k = 0;
-			if (!minishell->lexer->tokens[count.j++])
-				return (minishell);
-		}
-		else if (str[count.i] == '\'')
-		{
-			count.i++;
-			// count.i = skip_spaces(str, count.i);
-			minishell->lexer->tokens[count.j] = malloc(sizeof(char) * ft_strlen_squotes(str, count.i) + 1);
-			while (str[count.i] != '\'')
-				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
-			if (str[count.i + 1] && str[count.i + 1] != ' ' && str[count.i + 1] != '\t')
+			else if (str[count.i] == '\'')
 			{
 				count.i++;
-				while (str[count.i] && str[count.i] != ' ' && str[count.i] != '\t')
+				while (str[count.i] && str[count.i] != '\'')
+				{
 					minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+				}
+				count.i++;
 			}
-			minishell->lexer->tokens[count.j][count.k] = '\0';
-			count.k = 0;
-			if (!minishell->lexer->tokens[count.j++])
-				return (minishell);
+			else if (str[count.i] == '<' || str[count.i] == '>' || str[count.i] == '|')
+			{
+				break ;
+			}
+			else if (str[count.i] != ' ' && str[count.i] != '\t')
+			{
+				minishell->lexer->tokens[count.j][count.k++] = str[count.i++];
+			}
+			else if (str[count.i] == ' ' || str[count.i] == '\t')
+				break ;
+			// printf("%c", str[count.i]);
 		}
-		else
+		if (count.k > 0)
+			minishell->lexer->tokens[count.j++][count.k] = '\0';
+		if ((str[count.i] == '>' && str[count.i + 1] && str[count.i + 1] == '>') || (str[count.i] == '<' && str[count.i + 1] && str[count.i + 1] == '<'))
 		{
-			count.i = skip_spaces(str, count.i);
-			minishell->lexer->tokens[count.j++] = get_next_word(str, count.i);
-			// printf("token[%i]: %s\n", count.j - 1, minishell->lexer->tokens[count.j - 1]);
+			printf("This is a heredoc\n");
+			minishell->lexer->tokens[count.j] = malloc(sizeof(char) * (3));
+			minishell->lexer->tokens[count.j][0] = str[count.i];
+			minishell->lexer->tokens[count.j][1] = str[count.i + 1];
+			minishell->lexer->tokens[count.j++][2] = '\0';
+			count.i = skip_symbols(str, count.i);
 		}
-		// count.i = skip_spaces(str, count.i);
-		// while (str[count.i] && (str[count.i] != ' ' && str[count.i] != '\t'))
-		// {
-
-		// }
-		// if (count.i != is_symbol(str[count.i]) == FALSE)
-		//count.i = skip_token(str, count.i);
-		//// printf("count.i = %i\n", count.i);
-		//count.i = skip_spaces(str, count.i);
+		else if (str[count.i] == '>' || str[count.i] == '<' || str[count.i] == '|')
+		{
+			minishell->lexer->tokens[count.j] = malloc(sizeof(char) * (2));
+			minishell->lexer->tokens[count.j][0] = str[count.i];
+			minishell->lexer->tokens[count.j++][1] = '\0';
+			count.i = skip_symbols(str, count.i);
+		}
+		count.i = skip_spaces(str, count.i);
+		// printf("str[%i] = %c\n", count.i, str[count.i]);
 	}
 	minishell->lexer->tokens[count.j] = NULL;
-	// for (int x = 0; minishell->lexer->tokens[x]; x++)
-	// 	printf("%s\n", minishell->lexer->tokens[x]);
+	for (int i = 0; minishell->lexer->tokens[i]; i++)
+		printf("tokens[%i] = %s\n", i, minishell->lexer->tokens[i]);
+	printf("Tokenisation completed\n");
 	return (minishell);
 }
+
 
 /* LEXER DOUBLE QUOTES
 ** The way I am doing my lexer is in 3 steps
@@ -272,7 +320,7 @@ int	ft_strlen_dquotes(char *str, int i)
 		i++;
 	}
 	length--;
-	printf("length = %i\n", length);
+	// printf("length = %i\n", length);
 	return (length);
 }
 
@@ -293,7 +341,7 @@ int	ft_strlen_squotes(char *str, int i)
 		i++;
 	}
 	length--;
-	printf("length = %i\n", length);
+	// printf("length = %i\n", length);
 	return (length);
 }
 

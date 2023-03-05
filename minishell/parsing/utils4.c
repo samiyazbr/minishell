@@ -6,7 +6,7 @@
 /*   By: ooutabac <ooutabac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:29:38 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/02/23 19:17:47 by ooutabac         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:07:34 by ooutabac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char    *get_next_word(char *str, int i)
     if (!str || !str[i])
         return (NULL);
     word = malloc(sizeof(char) * token_size(str, i) + 1);
-	printf("token_size = %i && i = %i\n", token_size(str, i), i);
+	// printf("token_size = %i && i = %i\n", token_size(str, i), i);
     i = skip_spaces(str, i);
     j = 0;
     while (str[i] && (str[i] != ' ' && str[i] != '\t'))

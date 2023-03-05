@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooutabac <ooutabac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:29:43 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/02/23 22:06:04 by ooutabac         ###   ########.fr       */
+/*   Updated: 2023/03/05 11:02:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ t_shell_s	*parse(char *str, char **envp)
 	if (check_validity(minishell, str) == FALSE)
 	{
 		free_everything(minishell);
-		printf("Error: Syntax\n");
+		printf("Error:Systax\n");
 		return (NULL);
 	}
-	minishell->num_pipes = count_pipes(str);
+	if (minishell)
+		minishell->num_pipes = count_pipes(str);
 	minishell = get_num_commands(minishell);
 	minishell = get_commands(minishell);
 	minishell = get_flags(minishell);
-	// minishell = get_execution_blocks(minishell);
-	// minishell->command_blocks = get_redirections(minishell);
+	minishell = get_execution_blocks(minishell);
 	return (minishell);
 }
-
-// int	check_pipes_valid()

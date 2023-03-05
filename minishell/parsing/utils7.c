@@ -47,7 +47,7 @@ t_shell_s   *dollar_sign(t_shell_s *minishell)
             }
             count.j++;
         }
-        printf("token[%i] after dollar sign function = %s\n", count.i, minishell->lexer->raw_tokens[count.i]);
+        // printf("token[%i] after dollar sign function = %s\n", count.i, minishell->lexer->raw_tokens[count.i]);
         count.i++;
     }
     return (minishell);

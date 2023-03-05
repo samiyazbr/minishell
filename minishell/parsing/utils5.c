@@ -6,7 +6,7 @@
 /*   By: ooutabac <ooutabac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 10:29:08 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/02/23 22:03:53 by ooutabac         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:40:01 by ooutabac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	check_if_command(t_shell_s *minishell, char *token, int	token_num)
 {
 	if (!minishell || !token)
 		return (FALSE);
-	if (ft_strncmp(token, ">\0", 2) == 0 || ft_strncmp(token, "<\0", 2) == 0 || ft_strncmp(token, "|\0", 2) == 0)
+	if (ft_strncmp(token, ">\0", 2) == 0 || ft_strncmp(token, "<\0", 2) == 0 || ft_strncmp(token, "|\0", 2) == 0 || ft_strncmp(token, ">>\0", 3) == 0 || ft_strncmp(token, "<<\0", 3) == 0)
 		return (FALSE);
-	if (token_num > 0 && (ft_strncmp(minishell->lexer->raw_tokens[token_num - 1], ">\0", 2) == 0 || ft_strncmp(minishell->lexer->raw_tokens[token_num - 1], "<\0", 2) == 0))
+	if (token_num > 0 && (ft_strncmp(minishell->lexer->raw_tokens[token_num - 1], ">\0", 2) == 0 || ft_strncmp(minishell->lexer->raw_tokens[token_num - 1], "<\0", 2) == 0 || ft_strncmp(minishell->lexer->raw_tokens[token_num - 1], "<<\0", 3) == 0 || ft_strncmp(minishell->lexer->raw_tokens[token_num - 1], ">>\0", 3) == 0))
 		return (FALSE);
 	return (TRUE);
 }
@@ -52,7 +52,7 @@ int	get_num_flags(char **token, int i)
 	count.counter = 0;
 	while (token[i])
 	{
-		if ((ft_strncmp(token[i], ">\0", 2) == 0 || ft_strncmp(token[i], "<\0", 2) == 0))
+		if ((ft_strncmp(token[i], ">\0", 2) == 0 || ft_strncmp(token[i], "<\0", 2) == 0 || ft_strncmp(token[i], "<<\0", 3) == 0 || ft_strncmp(token[i], ">>\0", 3) == 0))
 			i++;
 		else if (ft_strncmp(token[i], "|\0", 2) != 0)
 			count.counter++;

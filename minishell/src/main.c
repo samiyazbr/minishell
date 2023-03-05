@@ -16,7 +16,6 @@
 //	//else if (ft_strncmp(minishell->commands[i], "export", 5) == 0)
 //	return (-1);
 //}
-
 void ft_ctrl_c()
 {
 	rl_replace_line("", 0);
@@ -41,23 +40,21 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	char *cmd;
 	int pid;
-	char **av;
 	int flag;
 	int i;
 	t_shell_s *minishell;
 
 	i = 0;
+	ft_signal();
 	while (1)
 	{
-		ft_signal();
 		flag = 0;
 		cmd = readline("minishell🤓$ ");
 		if (cmd == NULL)
-make			//printf("\n");
+		{
 			exit (0);
 		}
 		minishell = parse(cmd, envp);
-		av = ft_split(cmd, ' ');
 		if(!cmd)
 			exit(EXIT_SUCCESS);
 		if (strlen(cmd) > 0)
@@ -79,29 +76,35 @@ make			//printf("\n");
 			continue;
 		}
 		char **paths = ft_split(path, ':');
-		cmd = av[0];
-		if (ft_strchr(cmd, '/')== 0)
-		{
-			int x = 0;
-			while (paths[x])
-			{
-				paths[x] = ft_strjoin(paths[x], "/");
-				cmd = ft_strjoin(paths[x], av[0]);
-				if (access(cmd, 0) == 0)
+		pid = fork();
+		i = 0;
+		if (minishell != NULL)
+		{	while (i < minishell->num_commands)
+			{	
+				cmd = minishell->command_block[i]->command;
+				if (ft_strchr(minishell->command_block[i]->command, '/')== 0)
 				{
-					flag = 1;
-					break ;
-				} 
-				x++;
+					int x = 0;
+					while (paths[x])
+					{
+						paths[x] = ft_strjoin(paths[x], "/");
+						cmd = ft_strjoin(paths[x], minishell->command_block[i]->command);
+						if (access(cmd, 0) == 0)
+						{
+							flag = 1;
+							break ;
+						} 
+						x++;
+					}
+				}
+				if(pid == 0)
+				{
+					execve(cmd, minishell->command_block[i]->args, minishell->envp->envp);
+					perror("execve");
+				}
+				i++;
 			}
 		}
-		pid = fork();
-		if(pid == 0)
-		{
-			execve(cmd, av, envp);
-			perror("execve");
-		}
-		i++;
 		waitpid(pid, &flag, 0);
 		free(cmd);
 		cmd = NULL;

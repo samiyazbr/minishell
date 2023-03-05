@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szubair <szubair@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 13:47:57 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/03/02 17:20:20 by szubair          ###   ########.fr       */
+/*   Updated: 2023/03/05 10:42:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include "../libft/libft.h"
 
 # define TRUE 0
@@ -40,6 +41,7 @@ typedef struct s_counter
 	int	n;
 	int	x;
 	int	y;
+	int z;
 	int	trigger;
 	int	trigger2;
 	int	counter;
@@ -87,7 +89,7 @@ typedef struct s_files
     char    **infile_name; // List of all infile filename
     char    **outfile_name; // List of all outfile filenames
 	char	**append_name; // List of all append filenames
-    char    **limter; // Limiter of the heredoc
+    char    **limiter; // Limiter of the heredoc
     char    *redirect_type; // Contains the order of the redirections.
 	/*	'>' = infile
 		'<' = outfile
@@ -187,6 +189,12 @@ char			*check_for_output(char *str);
 int				ft_strlen_spaces(char *str, int i);
 int				count_pipes(char *str);
 int				ft_strlen_equals(char *str);
+int				count_tokens(char *str);
+
+int				count_infiles(char	**str);
+int				count_outfiles(char	**str);
+int				count_appends(char	**str);
+int				count_heredocs(char	**str);
 
 /*--------------------------------UTSIL2-------------------------------*/
 t_shell_s		*get_path(t_shell_s	*minishell, char **envp);
@@ -195,8 +203,8 @@ t_shell_s		*get_env_struct(t_shell_s *minishell, char *envp[]);
 t_shell_s		*get_flags(t_shell_s *minishell);
 t_shell_s		*get_commands(t_shell_s *minishell);
 t_shell_s		*get_num_commands(t_shell_s *minishell);
-t_shell_s		*get_command_blocks(t_shell_s *minishell, char *str);
-t_execute		*get_files(t_shell_s *minishell);
+t_shell_s		*get_execution_blocks(t_shell_s *minishell);
+t_execute		*get_files(t_shell_s *minishell, t_execute *execute_block, char **command_block, char **raw_command_block);
 
 /*--------------------------------UTSIL3-------------------------------*/
 t_shell_s		*lexer(t_shell_s *minishell, char *str);
@@ -224,6 +232,9 @@ int				check_validity(t_shell_s *minishell, char *str);
 t_shell_s		*raw_lexer(t_shell_s *minishell, char *str);
 int				raw_token_size(char *str, int i);
 char			**split_pipes(char	*str);
+char			**split_command_block(t_shell_s *minishell, int token_num);
+char			**split_raw_command_block(t_shell_s *minishell, int token_num);
+int				num_of_tokens_to_pipe(char **tokens, int token_num);
 int				length_to_pipe(char *str, int i);
 
 /*--------------------------------UTSIL7-------------------------------*/
@@ -233,5 +244,6 @@ t_shell_s	   *dollar_sign_env_variables(t_shell_s *minishell);
 /*---------------------------------FREE--------------------------------*/
 void		    free_everything(t_shell_s *minishell);
 void    		free_2d(char **array);
+
 
 #endif

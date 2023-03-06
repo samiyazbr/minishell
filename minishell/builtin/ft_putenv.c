@@ -32,27 +32,6 @@ static char	*get_env_value(const char *string)
 	return (value);
 }
 
-//char	*get_env_string(const char *string, const char *value)
-//{
-//	int		i;
-//	int		value_len;
-//	int		string_len;
-//	char	*env_string;
-
-//	i = 0;
-//	value_len = ft_strlen(value);
-//	string_len = ft_strlen(string);
-//	env_string = (char *)malloc(sizeof(char) * (string_len + 1));
-//	if (!env_string)
-//		return (NULL);
-//	while (i <= string_len)
-//	{
-//		env_string[i - value_len - 1] = string[i];
-//		i++;
-//	}
-//	return (env_string);
-//}
-
 static int	update_existing_env(const char *string, const char *value, t_shell_s *minishell)
 {
 	int	i;
@@ -89,7 +68,7 @@ static void	add_new_env(const char *string, t_shell_s *minishell)
 	}
 	new_environ[i] = ft_strdup(string);
 	new_environ[i + 1] = NULL;
-	//free(minishell->envp->envp);
+	free(minishell->envp->envp);
 	minishell->envp->envp = new_environ;
 }
 

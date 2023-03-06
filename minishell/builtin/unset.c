@@ -3,44 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szubair <szubair@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 17:17:55 by szubair           #+#    #+#             */
-/*   Updated: 2023/02/17 16:35:29 by szubair          ###   ########.fr       */
+/*   Updated: 2023/03/06 10:52:13 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-extern char **environ;
-
-int	ft_unset(const char *name) {
-	char	**env;
-	int		i;
-	int		length;
-
-	length = 0;
+void ft_unset(t_env_s *env, const char *key_to_unset)
+{
+    int i, j;
 	i = 0;
-	env = environ;
-	while (env[i] != NULL) 
-	{
-		length = ft_strlen(name);
-		if (ft_strncmp(env[i], name, length) == 0 && env[i][length] == '=')
-		{
-			break;
-		}
+    while (i < env->env_size)
+    {
+        if (ft_strncmp(env->key[i], key_to_unset, ft_strlen(key_to_unset)) == 0)
+        {
+            free(env->key[i]);
+            free(env->value[i]);
+			j = i;
+            while (j < env->env_size - 1)
+            {
+                env->key[j] = env->key[j+1];
+                env->value[j] = env->value[j+1];
+                env->envp[j] = env->envp[j+1];
+				j++;
+            }
+            env->envp[j] = NULL;
+            env->key[j] = NULL;
+            env->value[j] = NULL;
+            env->env_size--;
+            break;
+        }
 		i++;
-	}
-	if (env[i] == NULL)
-	{
-		return (1);
-	}
-
-	while (env[i] != NULL)
-	{
-		env[i] = env[i + 1];
-		i++;
-	}
-
-	return (0);
+    }
 }

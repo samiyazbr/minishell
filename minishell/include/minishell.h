@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 13:47:57 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/03/05 10:42:09 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/06 10:42:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@
 # define TRUE 0
 # define FALSE 1
 
-/* T_COUNTER
-- This struct is just for general use to save lines.
-It is used so I can easily pass multiple counters between functions and declare
-many counters using one variable.
-*/
+extern int g_err;
 typedef struct s_counter
 {
 	int	i;
@@ -47,18 +43,6 @@ typedef struct s_counter
 	int	counter;
 }t_counter;
 
-/* T_LEXER
-- This is where tokenization take place. I sepearate everything into tokens
-* What is a token?
-- A token is any word seperated by space with a few exceptions.
-These exceptions include double and single quotes. If a word is joined with double quotes,
-the word outside the quotes and the everything within the quotes will be in the same token
-regardless of spaces within the quotes. If two quotes are joined together, they will also be
-in the same token regardless of space.
-* Will I need this struct?
-- I assume not, you'll mostly be using the t_shell_s as it contains everything parsed and ready to use.
-If anything you need to check, you have the tokens if you had to use it for anything.
-*/
 typedef struct s_lexer
 {
 	char	**command_blocks;
@@ -108,6 +92,32 @@ typedef struct s_execute
     t_env_s	*env; // Contains all the environment variables
 }t_execute; // This is the executor's struct. It is stored as a double pointer struct in t_shell, each pointer representing a command block
 
+typedef struct s_shell_s
+{
+    int			num_commands; // number of all commands
+    int			num_pipes;  // number of all pipes
+	char		***flags;	// List of arguments of every command
+    char		**commands; // Simple commands
+    char		**path;    // a path for the list of path direcotories separeted by ':' (DONE)
+    char		*cmd_line; // read the command line (DONE)
+    t_env_s		*envp;	// Has data about environment variables
+	t_lexer		*lexer;	// Used for tokenisation. Has tokens with quotes and without.
+	t_files		*files;	// Has all infiles and outfiles for every command block
+	t_execute	**command_block; // Has all the necessary data for execution on each command block
+}t_shell_s;
+
+/* T_LEXER
+- This is where tokenization take place. I sepearate everything into tokens
+* What is a token?
+- A token is any word seperated by space with a few exceptions.
+These exceptions include double and single quotes. If a word is joined with double quotes,
+the word outside the quotes and the everything within the quotes will be in the same token
+regardless of spaces within the quotes. If two quotes are joined together, they will also be
+in the same token regardless of space.
+* Will I need this struct?
+- I assume not, you'll mostly be using the t_shell_s as it contains everything parsed and ready to use.
+If anything you need to check, you have the tokens if you had to use it for anything.
+*/
 /* T_SHELL_S
 This is the main and most important struct that contains everything
 
@@ -151,19 +161,12 @@ it should work on any number of commands.
 - Infile and outfile must be int * since bash accepts more than one redirection of the same type
 in the same prompt
 */
-typedef struct s_shell_s
-{
-    int			num_commands; // number of all commands
-    int			num_pipes;  // number of all pipes
-	char		***flags;	// List of arguments of every command
-    char		**commands; // Simple commands
-    char		**path;    // a path for the list of path direcotories separeted by ':' (DONE)
-    char		*cmd_line; // read the command line (DONE)
-    t_env_s		*envp;	// Has data about environment variables
-	t_lexer		*lexer;	// Used for tokenisation. Has tokens with quotes and without.
-	t_files		*files;	// Has all infiles and outfiles for every command block
-	t_execute	**command_block; // Has all the necessary data for execution on each command block
-}t_shell_s;
+
+/* T_COUNTER
+- This struct is just for general use to save lines.
+It is used so I can easily pass multiple counters between functions and declare
+many counters using one variable.
+*/
 
 /*--------------------------------SAMIYA-------------------------------*/
 /*---------------------------------MAIN--------------------------------*/

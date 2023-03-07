@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szubair <szubair@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:01:18 by szubair           #+#    #+#             */
-/*   Updated: 2023/03/02 16:53:37 by szubair          ###   ########.fr       */
+/*   Updated: 2023/03/07 13:19:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int cd_error(char *arg)
 {
-	write(1, "bash: cd: ", 2);
+	write(2, "bash: cd: ",10);
 	perror(arg);
 	return (1);
 }

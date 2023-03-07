@@ -6,27 +6,57 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:51:24 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/07 11:52:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/07 12:41:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//int	is_builtin(t_shell_s *minishell, int i,char **env)
-//{
-//	if (ft_strncmp(minishell->commands[i], "echo", 4) == 0)
-//		return (ft_echo(minishell->flags[i]));
-//	else if (ft_strncmp(minishell->commands[i], "env", 3) == 0)
-//		return (ft_env(env, minishell->flags[i]));
-//	else if(ft_strncmp(minishell->commands[i], "cd", 2) == 0)
-//		return(ft_cd(minishell->flags[i], minishell->num_commands));
-//	else if (ft_strcmp(minishell->commands[i], "pwd", 3) == 0)
-//		return (ft_pwd(minishell->flags[i]));
-//	else if (ft_strncmp(minishell->commands[i], "unset", 5) == 0)
-//		return(ft_unset(minishell->flags[i][1]));
-//	//else if (ft_strncmp(minishell->commands[i], "export", 5) == 0)
-//	return (-1);
-//}
+int	is_builtin(t_shell_s *minishell, int i,char **env)
+{
+	int j;
+	int arg_count;
+
+	if (ft_strncmp(minishell->command_block[i]->command, "echo", 4) == 0)
+		return (ft_echo(minishell->command_block[i]->args));
+	else if (ft_strncmp(minishell->command_block[i]->command, "env", 3) == 0)
+		return (ft_env(env, minishell->command_block[i]->args));
+	else if(ft_strncmp(minishell->command_block[i]->command, "cd", 2) == 0)
+	{
+		while (minishell->command_block[i]->args)
+		{
+			arg_count++;
+		}
+		return(cd(minishell->command_block[i]->args, arg_count, minishell));
+	}
+	else if (ft_strncmp(minishell->command_block[i]->command, "pwd", 3) == 0)
+		return (ft_pwd(minishell->command_block[i]->args));
+	else if (ft_strncmp(minishell->command_block[i]->command, "unset", 5) == 0)
+	{
+		ft_unset(minishell->envp, minishell->command_block[i]->args[1]);
+		return (0);
+	}
+	else if (ft_strncmp(minishell->command_block[i]->command, "export", 5) == 0)
+	{
+		while(j < minishell->envp->env_size)
+		{
+			j = 0;
+			ft_export(minishell->envp, minishell->envp->key[j], minishell->envp->value[i]);
+			j++;
+		}
+		if (j == minishell->envp->env_size)
+		{
+			return (0);
+		}
+		else
+		{
+			//g_err = 127;
+			return (127);
+		}
+
+	}
+	return (-1);
+}
 void ft_ctrl_c()
 {
 	rl_replace_line("", 0);

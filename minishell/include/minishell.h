@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 13:47:57 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/03/07 11:50:43 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/07 12:38:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 # define TRUE 0
 # define FALSE 1
 
-extern int g_err;
+//extern int g_err;
+
 typedef struct s_counter
 {
 	int	i;
@@ -177,8 +178,10 @@ int	ft_env(char **env, char **args);
 int	ft_pwd(char **args);
 char	*ft_getenv(t_shell_s *minishell, const char *name);
 int	ft_putenv(const char *string, t_shell_s *minishell);
-int	is_builtin(t_shell_s *command, int i);
+int	is_builtin(t_shell_s *minishell, int i,char **env);
 void ft_export(t_env_s *env, const char *key, const char *value);
+void ft_unset(t_env_s *env, const char *key_to_unset);
+int cd (char **args, int args_count, t_shell_s *minishell);
 
 /*--------------------------------OBADA--------------------------------*/
 /*-------------------------------PARSING-------------------------------*/

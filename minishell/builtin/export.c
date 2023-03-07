@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:01:44 by szubair           #+#    #+#             */
-/*   Updated: 2023/03/07 11:50:04 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/07 12:19:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void ft_export(t_env_s *env, const char *key, const char *value)
 	    write(2, "Error: Failed to allocate memory.\n",34);
 	    return;
 	}
-	//sprintf(new_env_var, "%s=%s", key, value);
 	printf("declare -x %s%s\n", key, value);
 
 	// Create new arrays with one extra element

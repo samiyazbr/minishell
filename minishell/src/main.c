@@ -1,5 +1,16 @@
-#include "../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 11:51:24 by codespace         #+#    #+#             */
+/*   Updated: 2023/03/07 11:52:01 by codespace        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../include/minishell.h"
 
 //int	is_builtin(t_shell_s *minishell, int i,char **env)
 //{
@@ -45,9 +56,9 @@ int main(int argc, char **argv, char **envp)
 	t_shell_s *minishell;
 
 	i = 0;
-	ft_signal();
 	while (1)
 	{
+		ft_signal();
 		flag = 0;
 		cmd = readline("minishell🤓$ ");
 		if (cmd == NULL)

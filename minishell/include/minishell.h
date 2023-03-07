@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 13:47:57 by ooutabac          #+#    #+#             */
-/*   Updated: 2023/03/06 10:42:24 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/07 11:50:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int	ft_pwd(char **args);
 char	*ft_getenv(t_shell_s *minishell, const char *name);
 int	ft_putenv(const char *string, t_shell_s *minishell);
 int	is_builtin(t_shell_s *command, int i);
+void ft_export(t_env_s *env, const char *key, const char *value);
 
 /*--------------------------------OBADA--------------------------------*/
 /*-------------------------------PARSING-------------------------------*/

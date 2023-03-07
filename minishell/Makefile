@@ -28,6 +28,7 @@ SRCS		=	src/main.c			\
 				builtin/unset.c		\
 				builtin/pwd.c		\
 				builtin/env.c		\
+				builtin/export.c	\
 				builtin/ft_putenv.c	\
 				builtin/cd.c		\
 				parsing/parse.c		\

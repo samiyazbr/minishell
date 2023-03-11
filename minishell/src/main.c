@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:51:24 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/07 12:41:04 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/11 10:15:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	char *cmd;
 	int pid;
+	char **av;
 	int flag;
 	int i;
 	t_shell_s *minishell;
@@ -93,9 +94,11 @@ int main(int argc, char **argv, char **envp)
 		cmd = readline("minishell🤓$ ");
 		if (cmd == NULL)
 		{
+			//printf("\n");
 			exit (0);
 		}
 		minishell = parse(cmd, envp);
+		av = ft_split(cmd, ' ');
 		if(!cmd)
 			exit(EXIT_SUCCESS);
 		if (strlen(cmd) > 0)
@@ -117,35 +120,29 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 		char **paths = ft_split(path, ':');
-		pid = fork();
-		i = 0;
-		if (minishell != NULL)
-		{	while (i < minishell->num_commands)
-			{	
-				cmd = minishell->command_block[i]->command;
-				if (ft_strchr(minishell->command_block[i]->command, '/')== 0)
+		cmd = av[0];
+		if (ft_strchr(cmd, '/')== 0)
+		{
+			int x = 0;
+			while (paths[x])
+			{
+				paths[x] = ft_strjoin(paths[x], "/");
+				cmd = ft_strjoin(paths[x], av[0]);
+				if (access(cmd, 0) == 0)
 				{
-					int x = 0;
-					while (paths[x])
-					{
-						paths[x] = ft_strjoin(paths[x], "/");
-						cmd = ft_strjoin(paths[x], minishell->command_block[i]->command);
-						if (access(cmd, 0) == 0)
-						{
-							flag = 1;
-							break ;
-						} 
-						x++;
-					}
-				}
-				if(pid == 0)
-				{
-					execve(cmd, minishell->command_block[i]->args, minishell->envp->envp);
-					perror("execve");
-				}
-				i++;
+					flag = 1;
+					break ;
+				} 
+				x++;
 			}
 		}
+		pid = fork();
+		if(pid == 0)
+		{
+			execve(cmd, av, envp);
+			perror("execve");
+		}
+		i++;
 		waitpid(pid, &flag, 0);
 		free(cmd);
 		cmd = NULL;
@@ -153,3 +150,5 @@ int main(int argc, char **argv, char **envp)
 
 	exit(EXIT_SUCCESS);
 }
+
+
